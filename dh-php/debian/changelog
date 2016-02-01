@@ -1,0 +1,43 @@
+dh-php (0.6+deb.sury.org~trusty+1) trusty; urgency=medium
+
+  * Backport for Trusty Tahr (14.04 LTS)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 31 Dec 2015 09:29:41 +0100
+
+dh-php (0.6) unstable; urgency=medium
+
+  * Depend on at least one phpapi-<ver>, but not a specific one
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 31 Dec 2015 09:24:29 +0100
+
+dh-php (0.5) unstable; urgency=medium
+
+  * Add support for dh_php --version=X.Y
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 09 Dec 2015 11:45:25 +0100
+
+dh-php (0.4) unstable; urgency=medium
+
+  * Add extra ALL argument for ALL versions, fixes broken maintscripts
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 09 Dec 2015 10:16:28 +0100
+
+dh-php (0.3) unstable; urgency=medium
+
+  * Rename the package just to dh-php (but the multiversion support is not yet there)
+  * Update Vcs-Urls to point to anonscm.debian.org
+  * Remove obsolete Conflicts/Replaces with php5-dev
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 16 Aug 2015 14:38:14 +0200
+
+dh-php5 (0.2) unstable; urgency=medium
+
+  * Don't fail purge when php5-common is uninstalled (Closes: #745561)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 27 Apr 2014 15:11:09 +0200
+
+dh-php5 (0.1) unstable; urgency=low
+
+  * Initial release (Closes: #737842)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 13 Feb 2014 16:42:36 +0100

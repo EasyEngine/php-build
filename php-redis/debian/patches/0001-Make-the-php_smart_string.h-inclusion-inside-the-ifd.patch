@@ -1,0 +1,10 @@
+From: =?utf-8?q?Ond=C5=99ej_Sur=C3=BD?= <ondrej@sury.org>
+Date: Mon, 14 Dec 2015 15:44:33 +0100
+Subject: Make the php_smart_string.h inclusion inside the #ifdef
+
+---
+ redis-2.2.7-355-g799e0bc/common.h  | 4 ++++
+ redis-2.2.7-355-g799e0bc/library.c | 4 ++++
+ redis-2.2.7-355-g799e0bc/redis.c   | 4 ++++
+ 3 files changed, 12 insertions(+)
+

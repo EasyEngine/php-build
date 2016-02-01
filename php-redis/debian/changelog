@@ -1,0 +1,54 @@
+php-redis (2.2.7-355-g799e0bc+2.2.7-1+deb.sury.org~trusty+1) trusty; urgency=medium
+
+  * Backport for Trusty Tahr (14.04 LTS)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 17 Dec 2015 15:12:26 +0100
+
+php-redis (2.2.7-355-g799e0bc+2.2.7-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.2.7-355-g799e0bc+2.2.7
+  * Dual source build for PHP 5.6 and PHP 7.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 17 Dec 2015 15:11:15 +0100
+
+php-redis (2.2.7-355-g799e0bc-1) unstable; urgency=medium
+
+  * Don't import ugly upstream debian/ directory  
+  * Imported Upstream version 2.2.7-355-g799e0bc to fix building with
+    PHP 7.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 09 Dec 2015 14:00:35 +0100
+
+php-redis (2.2.7-2) unstable; urgency=medium
+
+  * Convert package to PHP 7.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 09 Dec 2015 13:52:48 +0100
+
+php-redis (2.2.7-1) unstable; urgency=medium
+
+  * New upstream version 2.2.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 02 May 2015 13:29:53 +0200
+
+php-redis (2.2.5-1) unstable; urgency=low
+
+  * Team upload.
+  * Imported Upstream version 2.2.5
+  * d/changelog: fixed too long line
+  * d/control:
+    - bumped up standards version to 3.9.5 (no changes need)
+    - added phppear:Debian-Depends in Depends
+
+ -- Jonas Genannt <jonas.genannt@capi2name.de>  Tue, 25 Mar 2014 12:28:52 +0100
+
+php-redis (2.2.4-1) unstable; urgency=low
+
+  * Initial Release (Closes: #703452).
+  * Move under PHP PECL team umbrella
+  * Add Cyril Bouthors <cyb@debian.org> to Uploaders
+  * Add myself into Uploaders
+  * Don't use ${phppear:Debian-Depends} to not pull strict php5 dependency, use
+    ${php:Depends} instead
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 21 Oct 2013 10:19:51 +0200

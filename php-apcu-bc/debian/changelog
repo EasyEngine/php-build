@@ -1,0 +1,18 @@
+php-apcu-bc (1.0.1-1+deb.sury.org~trusty+1) trusty; urgency=medium
+
+  * Backport for Trusty Tahr (14.04 LTS)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Jan 2016 09:57:38 +0100
+
+php-apcu-bc (1.0.1-1) unstable; urgency=medium
+
+  * Override wrong license-problem-php-license lintian check for packages from PECL
+  * Imported Upstream version 1.0.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Jan 2016 09:51:52 +0100
+
+php-apcu-bc (1.0.0-1) unstable; urgency=low
+
+  * Initial Release (Closes: XXXXX).
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 10 Dec 2015 08:16:50 +0100

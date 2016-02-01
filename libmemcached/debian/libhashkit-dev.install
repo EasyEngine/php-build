@@ -1,0 +1,4 @@
+usr/include/libhashkit
+usr/include/libhashkit-1.0
+usr/lib/*/libhashkit.a
+usr/lib/*/libhashkit.so

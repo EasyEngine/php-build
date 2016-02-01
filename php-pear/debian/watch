@@ -1,0 +1,3 @@
+version=3
+http://pear.php.net/package/PEAR/download .*/PEAR-(.*).tgz
+

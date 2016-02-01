@@ -1,0 +1,27 @@
+php-pear (1:1.10.1+submodules+notgz-3+deb.sury.org~trusty+3) trusty; urgency=medium
+
+  * Backport for Trusty Tahr (14.04 LTS)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 10 Jan 2016 08:37:16 +0100
+
+php-pear (1:1.10.1+submodules+notgz-3) unstable; urgency=medium
+
+  * Depend on generic php-cli instead of php5-cli
+  * Fix debian/php-pear.substvars-static to not depend on php5-*
+  * Move included modules from Depends to Provides
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 07 Dec 2015 16:00:56 +0100
+
+php-pear (1:1.10.1+submodules+notgz-2) experimental; urgency=medium
+
+  * Don't depend on included libs: Structures_Graph, Console_Getopt, XML_Util
+
+ -- Mathieu Parent <sathieu@debian.org>  Tue, 08 Dec 2015 23:17:52 +0100
+
+php-pear (1:1.10.1+submodules+notgz-1) experimental; urgency=low
+
+  * Initial release. (Closes: #801919)
+  * Using epoch, as package was previously in src:php5 (Closes: #714848)
+  * Install manpages (Closes: #414878)
+
+ -- Mathieu Parent <sathieu@debian.org>  Fri, 27 Nov 2015 23:30:21 +0100

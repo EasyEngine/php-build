@@ -1,0 +1,26 @@
+Source: php5.6-json
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <pkg-php-pecl@lists.alioth.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>, Lior Kaplan <kaplan@debian.org>
+Build-Depends: debhelper (>= 9),
+	       php5.6-dev,
+	       dh-php (>= 0.5~)
+Standards-Version: 3.9.6
+Vcs-Git: git://anonscm.debian.org/pkg-php/php5.6-json.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-php/php5.6-json.git
+Homepage: http://pecl.php.net/package/jsonc
+
+Package: php5.6-json
+Architecture: any
+Depends: ${shlibs:Depends},
+	 ${php:Depends},
+	 ${misc:Depends},
+	 ucf,
+	 libjson-c2 (>= 0.11-3~)
+Description: JSON module for PHP 5.6
+ This package provides a module for JSON functions in PHP scripts.
+ .
+ PHP (recursive acronym for PHP: Hypertext Preprocessor) is a widely-used
+ open source general-purpose scripting language that is especially suited
+ for web development and can be embedded into HTML.

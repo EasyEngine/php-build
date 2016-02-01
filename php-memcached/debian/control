@@ -1,0 +1,28 @@
+Source: php-memcached
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <pkg-php-pecl@lists.alioth.debian.org>
+Uploaders: Sergey B Kirpichev <skirpichev@gmail.com>
+Build-Depends: debhelper (>= 9),
+               dh-php,
+               libmemcached-dev (>= 1.0.18),
+               php-all-dev,
+               pkg-config
+Standards-Version: 3.9.6
+Homepage: http://pecl.php.net/package/memcached
+VCS-Git: git://anonscm.debian.org/collab-maint/php-memcached.git
+VCS-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/php-memcached.git;a=summary
+
+Package: php-memcached
+Architecture: any
+Depends: ucf,
+         ${misc:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Description: memcached extension module for PHP5, uses libmemcached
+ Memcached is a caching daemon designed especially for
+ dynamic web applications to decrease database load by
+ storing objects in memory.
+ .
+ This extension uses libmemcached library to provide
+ API for communicating with memcached servers.

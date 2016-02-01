@@ -1,0 +1,4 @@
+version=3
+opts=pgpsigurlmangle=s/$/.asc/ \
+https://launchpad.net/libmemcached/+download \
+https?://launchpad.net/libmemcached/[\d\.]+/[\d\.]+/\+download/libmemcached-([\d\.]+).tar.gz

@@ -1,0 +1,17 @@
+Source: php-uuid
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <pkg-php-pecl@lists.alioth.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+	       php-all-dev (>= 17~),
+	       uuid-dev,
+	       dh-php
+Standards-Version: 3.9.6
+Homepage: https://pecl.php.net/package/uuid
+
+Package: php-uuid
+Architecture: any
+Depends: ucf, ${shlibs:Depends}, ${misc:Depends}, ${php:Depends}
+Description: PHP UUID extension
+ A thin wrapper around libuuid from the ext2utils project

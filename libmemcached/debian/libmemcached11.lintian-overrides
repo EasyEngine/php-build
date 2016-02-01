@@ -1,0 +1,4 @@
+# Following Russ Allbery's advice on omitting symbols files for C++ libraries,
+# this package does not use them either:
+# http://www.eyrie.org/~eagle/journal/2012-02/001.html
+libmemcached11: no-symbols-control-file usr/lib/x86_64-linux-gnu/libmemcached.so.11.0.0

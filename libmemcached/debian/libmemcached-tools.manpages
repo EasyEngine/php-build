@@ -1,0 +1,14 @@
+man/memaslap.1
+man/memcapable.1
+man/memcat.1
+man/memcp.1
+man/memdump.1
+man/memerror.1
+man/memexist.1
+man/memflush.1
+man/memparse.1
+man/memping.1
+man/memrm.1
+man/memslap.1
+man/memstat.1
+man/memtouch.1

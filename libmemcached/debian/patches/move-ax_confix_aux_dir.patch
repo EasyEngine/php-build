@@ -1,0 +1,22 @@
+Description: Move AC_CONFIG_AUX_DIR up a few lines so autofoo can find it
+Author: Michael Fladischer <FladischerMichael@fladi.at>
+Last-Update: 2014-11-10
+Forwarded: no
+Bug-Debian: https://bugs.debian.org/768688
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -13,11 +13,12 @@
+ AC_PREREQ([2.61])
+ AC_INIT([libmemcached],VERSION_NUMBER,[http://libmemcached.org/])
+ 
++AC_CONFIG_AUX_DIR([build-aux])
++
+ # Setup the compilers early on
+ AC_PROG_CC([cc gcc clang])
+ AC_PROG_CXX([c++ g++ clang++])
+ 
+-AC_CONFIG_AUX_DIR([build-aux])
+ AC_CONFIG_MACRO_DIR([m4])
+ 
+ AC_CANONICAL_HOST

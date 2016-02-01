@@ -1,0 +1,17 @@
+if [ "$1" = "purge" ] ; then
+    if [ -e /usr/lib/php/php-maintscript-helper ] ; then
+	. /usr/lib/php/php-maintscript-helper
+
+	for conf in #NAMES# ; do
+	    php_invoke #HELPER# #VERSION# ALL $conf || #ERROR_HANDLER#
+	done
+    else
+	if [ -x /usr/sbin/php#HELPER# ]; then 
+	    for conf in #NAMES# ; do
+	        php#HELPER# $conf
+	    done
+	else
+	    echo "WARN: php-common has been removed, you need to cleanup /etc/php yourself."
+	fi
+    fi
+fi

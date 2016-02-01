@@ -1,0 +1,36 @@
+Description: Fix build failure on GNU/Hurd.
+Author: Pino Toscano <pino@debian.org>
+Last-Update: 2013-06-17
+Bug: https://bugs.launchpad.net/libmemcached/+bug/1191503
+
+--- a/libtest/timer.cc
++++ b/libtest/timer.cc
+@@ -41,7 +41,7 @@
+ #include <ctime>
+ #include <iomanip>
+ 
+-#ifdef __MACH__
++#ifdef __APPLE__
+ # include <mach/clock.h>
+ # include <mach/mach.h>
+ #else
+@@ -110,7 +110,7 @@
+ 
+ void Timer::_time(struct timespec& ts)
+ {
+-#ifdef __MACH__ // OSX lacks clock_gettime()
++#ifdef __APPLE__ // OSX lacks clock_gettime()
+   clock_serv_t _clock_serv;
+   mach_timespec_t _mach_timespec;
+   host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &_clock_serv);
+--- a/libtest/unittest.cc
++++ b/libtest/unittest.cc
+@@ -622,6 +622,8 @@
+   ASSERT_EQ(Application::INVALID_POSIX_SPAWN, true_app.run(args));
+ #elif defined(__FreeBSD__) && __FreeBSD__
+   ASSERT_EQ(Application::INVALID_POSIX_SPAWN, true_app.run(args));
++#elif defined(__GNU__)
++  ASSERT_EQ(Application::INVALID_POSIX_SPAWN, true_app.run(args));
+ #else
+   ASSERT_EQ(Application::SUCCESS, true_app.run(args));
+   ASSERT_EQ(Application::INVALID_POSIX_SPAWN, true_app.join());

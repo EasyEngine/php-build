@@ -1,0 +1,11 @@
+php-uuid (1.0.4-1+deb.sury.org~trusty+1) trusty; urgency=medium
+
+  * Backport for Trusty Tahr (14.04 LTS)
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 08 Jan 2016 14:11:15 +0100
+
+php-uuid (1.0.4-1) unstable; urgency=medium
+
+  * Initial release
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 08 Jan 2016 14:02:39 +0100

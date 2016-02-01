@@ -1,0 +1,24 @@
+Source: php-redis
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <pkg-php-pecl@lists.alioth.debian.org>
+Uploaders: Jonas Genannt <jonas.genannt@capi2name.de>,
+	   Cyril Bouthors <cyb@debian.org>,
+	   Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9),
+	       php-all-dev,
+	       php5.6-dev,
+	       dh-php
+Standards-Version: 3.9.6
+Vcs-Git: git://anonscm.debian.org/pkg-php/php-redis.git
+Vcs-Browser: http://anonscm.debian.org/gitweb?p=pkg-php/php-redis.git;a=summary
+Homepage: http://pecl.php.net/package/redis
+
+Package: php-redis
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${php:Depends}
+Suggests: redis-server
+Description: PHP extension for interfacing with Redis
+ This extension allows php applications to communicate with the Redis
+ persistent key-value store. The php-redis module provides an easy
+ object oriented interface.

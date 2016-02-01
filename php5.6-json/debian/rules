@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+PHP_VERSION=5.6
+PHPIZE=/usr/bin/phpize$(PHP_VERSION)
+PHPCONFIG=/usr/bin/php-config$(PHP_VERSION)
+
+INSTALL_ROOT=$(CURDIR)/debian/php$(PHP_VERSION)-json
+SOURCE_DIR=$(shell ls -1d jsonc-*)
+
+%:
+	dh $@ --with php -D$(SOURCE_DIR)
+
+override_dh_auto_configure:
+	cd $(SOURCE_DIR) && $(PHPIZE)
+	dh_auto_configure -D$(SOURCE_DIR) -- --with-php-config=$(PHPCONFIG) --enable-json
+
+override_dh_auto_install:
+	dh_auto_install -D$(SOURCE_DIR) -- INSTALL_ROOT=$(INSTALL_ROOT)
+
+override_dh_php:
+	dh_php --php-version=$(PHP_VERSION)

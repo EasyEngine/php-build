@@ -1,0 +1,12 @@
+php5.6-json for Debian
+----------------------------------------------------------------------
+
+ WARNING: This package cannot be converted to pkg-php-tools since the
+ pkg-php-tools themselves depends on this packages, thus:
+
+  * There would be circular build dependency
+
+  * Any breakage of php-json would break the build of php-json, thus
+    creating the vicious circle of brokeness
+
+ -- Ondřej Surý <ondrej@debian.org>, Fri,  8 Jan 2016 10:39:55 +0100

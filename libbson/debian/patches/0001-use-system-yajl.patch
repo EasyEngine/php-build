@@ -1,0 +1,189 @@
+From: "A. Jesse Jiryu Davis" <jesse@mongodb.com>
+Date: Thu, 14 Jan 2016 15:44:56 +0100
+Subject: use system yajl
+
+---
+ src/Makefile.am      |  3 +--
+ src/bson/Makefile.am |  1 -
+ src/bson/bson-json.c | 49 +++++++++++++++++++++++++++++++++++--------------
+ tests/test-json.c    | 25 +++++++++++++++++++++++++
+ 4 files changed, 61 insertions(+), 17 deletions(-)
+
+diff --git a/src/Makefile.am b/src/Makefile.am
+index e243524..ad8cb69 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -3,7 +3,7 @@ lib_LTLIBRARIES += libbson-1.0.la
+ libbson_1_0_la_SOURCES =
+ libbson_1_0_la_LIBADD = \
+ 	libbson.la \
+-	libyajl.la \
++	-lyajl
+ 	-lm
+ libbson_1_0_la_LDFLAGS = \
+ 	$(OPTIMIZE_LDFLAGS) \
+@@ -18,7 +18,6 @@ libbson_1_0_la_LDFLAGS += -export-symbols-regex "^(bson_|bcon_)"
+ endif
+ 
+ include src/bson/Makefile.am
+-include src/yajl/Makefile.am
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = $(top_builddir)/src/libbson-1.0.pc
+diff --git a/src/bson/Makefile.am b/src/bson/Makefile.am
+index bd97731..c60ef3a 100644
+--- a/src/bson/Makefile.am
++++ b/src/bson/Makefile.am
+@@ -50,7 +50,6 @@ libbson_la_CPPFLAGS = \
+ 	-DBSON_COMPILATION \
+ 	-I$(top_srcdir)/src \
+ 	-I$(top_srcdir)/src/bson \
+-	-I$(top_srcdir)/src/yajl \
+ 	-I$(top_builddir)/src/bson
+ 
+ libbson_la_CFLAGS = \
+diff --git a/src/bson/bson-json.c b/src/bson/bson-json.c
+index 6413452..04ac4af 100644
+--- a/src/bson/bson-json.c
++++ b/src/bson/bson-json.c
+@@ -26,8 +26,7 @@
+ #include "bson-iso8601-private.h"
+ #include "b64_pton.h"
+ 
+-#include <yajl/yajl_parser.h>
+-#include <yajl/yajl_bytestack.h>
++#include <yajl/yajl_parse.h>
+ 
+ #ifdef _WIN32
+ # include <io.h>
+@@ -160,6 +159,7 @@ struct _bson_json_reader_t
+ {
+    bson_json_reader_producer_t  producer;
+    bson_json_reader_bson_t      bson;
++   bool                         allow_multiple;
+    yajl_handle                  yh;
+    bson_error_t                *error;
+ };
+@@ -965,6 +965,34 @@ static yajl_callbacks read_cbs = {
+ };
+ 
+ 
++static yajl_handle
++_bson_json_reader_yajl_handle (bson_json_reader_t *reader)
++{
++   if (!reader->yh) {
++      reader->yh = yajl_alloc (&read_cbs, &gYajlAllocFuncs, reader);
++      yajl_option opt = yajl_dont_validate_strings;
++
++      if (reader->allow_multiple) {
++         opt |= yajl_allow_multiple_values;
++      }
++
++      yajl_config (reader->yh, opt, 1);
++   }
++
++   return reader->yh;
++}
++
++
++static void
++_bson_json_reader_yajl_handle_clear (bson_json_reader_t *reader)
++{
++   if (reader->yh) {
++      yajl_free (reader->yh);
++      reader->yh = NULL;
++   }
++}
++
++
+ static int
+ _bson_json_read_parse_error (bson_json_reader_t *reader, /* IN */
+                              yajl_status         ys,     /* IN */
+@@ -999,9 +1027,7 @@ _bson_json_read_parse_error (bson_json_reader_t *reader, /* IN */
+    }
+ 
+    p->bytes_parsed += yajl_get_bytes_consumed (yh);
+-
+-   yh->stateStack.used = 0;
+-   yajl_bs_push (yh->stateStack, yajl_state_start);
++   _bson_json_reader_yajl_handle_clear (reader);
+ 
+    return r;
+ }
+@@ -1047,7 +1073,7 @@ bson_json_reader_read (bson_json_reader_t *reader, /* IN */
+    BSON_ASSERT (bson);
+ 
+    p = &reader->producer;
+-   yh = reader->yh;
++   yh = _bson_json_reader_yajl_handle (reader);
+ 
+    reader->bson.bson = bson;
+    reader->bson.n = -1;
+@@ -1133,13 +1159,8 @@ bson_json_reader_new (void                 *data,           /* IN */
+    p->buf = bson_malloc (buf_size);
+    p->buf_size = buf_size ? buf_size : BSON_JSON_DEFAULT_BUF_SIZE;
+ 
+-   r->yh = yajl_alloc (&read_cbs, &gYajlAllocFuncs, r);
+-
+-   yajl_config (r->yh,
+-                yajl_dont_validate_strings |
+-                (allow_multiple ?  yajl_allow_multiple_values : 0)
+-                , 1);
+-
++   r->allow_multiple = allow_multiple;
++   _bson_json_reader_yajl_handle (r);
+    return r;
+ }
+ 
+@@ -1162,7 +1183,7 @@ bson_json_reader_destroy (bson_json_reader_t *reader) /* IN */
+       bson_free (b->bson_type_buf[i].buf);
+    }
+ 
+-   yajl_free (reader->yh);
++   _bson_json_reader_yajl_handle_clear (reader);
+ 
+    bson_free (reader);
+ }
+diff --git a/tests/test-json.c b/tests/test-json.c
+index e0eb861..0a1ae41 100644
+--- a/tests/test-json.c
++++ b/tests/test-json.c
+@@ -500,6 +500,30 @@ test_bson_json_read_invalid_json(void)
+    assert (!b);
+ }
+ 
++static void
++test_bson_json_multiple_errors (void)
++{
++   const char *json;
++   bson_json_reader_t *reader;
++   int i;
++   int r;
++   bson_t bson = BSON_INITIALIZER;
++   bson_error_t error;
++
++   json = ("{1{'err'}");
++   reader = bson_json_data_reader_new (true, 0);
++   bson_json_data_reader_ingest(reader, (uint8_t *)json, strlen(json));
++
++   for (i = 0; i < 4; i++) {
++      r = bson_json_reader_read (reader, &bson, &error);
++      ASSERT_CMPINT (r, <, 0);
++      bson_reinit (&bson);
++   }
++
++   bson_json_reader_destroy (reader);
++   bson_destroy (&bson);
++}
++
+ static ssize_t
+ test_bson_json_read_bad_cb_helper(void *_ctx, uint8_t * buf, size_t len)
+ {
+@@ -827,6 +851,7 @@ test_json_install (TestSuite *suite)
+    TestSuite_Add (suite, "/bson/json/date", test_bson_json_date);
+    TestSuite_Add (suite, "/bson/json/read/missing_complex", test_bson_json_read_missing_complex);
+    TestSuite_Add (suite, "/bson/json/read/invalid_json", test_bson_json_read_invalid_json);
++   TestSuite_Add (suite, "/bson/json/read/multiple_errors", test_bson_json_multiple_errors);
+    TestSuite_Add (suite, "/bson/json/read/bad_cb", test_bson_json_read_bad_cb);
+    TestSuite_Add (suite, "/bson/json/read/invalid", test_bson_json_read_invalid);
+    TestSuite_Add (suite, "/bson/json/read/file", test_json_reader_new_from_file);

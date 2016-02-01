@@ -1,0 +1,6 @@
+usr/include/libmemcached
+usr/include/libmemcached-1.0
+usr/include/libmemcachedutil-1.0
+usr/lib/*/libmemcached*.a
+usr/lib/*/libmemcached*.so
+usr/lib/*/pkgconfig/*
